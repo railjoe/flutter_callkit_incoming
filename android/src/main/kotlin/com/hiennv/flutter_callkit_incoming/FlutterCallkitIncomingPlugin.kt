@@ -3,6 +3,7 @@ package com.hiennv.flutter_callkit_incoming
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.NonNull
@@ -204,6 +205,12 @@ class FlutterCallkitIncomingPlugin : FlutterPlugin, MethodCallHandler, ActivityA
                             )
                         }
                     }
+                    context?.sendBroadcast(
+                        CallkitIncomingBroadcastReceiver.getIntentEnded(
+                            requireNotNull(context),
+                            Bundle.EMPTY
+                        )
+                    )
                     removeAllCalls(context)
                     result.success("OK")
                 }
