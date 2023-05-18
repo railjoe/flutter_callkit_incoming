@@ -205,10 +205,10 @@ class FlutterCallkitIncomingPlugin : FlutterPlugin, MethodCallHandler, ActivityA
                             )
                         }
                     }
+                    val data = Data(call.arguments() ?: HashMap<String, Any?>())
                     context?.sendBroadcast(
                         CallkitIncomingBroadcastReceiver.getIntentEnded(
-                            requireNotNull(context),
-                            Bundle.EMPTY
+                            requireNotNull(context), data.toBundle()
                         )
                     )
                     removeAllCalls(context)
