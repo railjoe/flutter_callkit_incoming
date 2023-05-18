@@ -69,14 +69,11 @@ class CallkitIncomingActivity : Activity() {
 
     inner class EndedCallkitIncomingBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            Log.e("TESTING","EndedCallkitIncomingBroadcastReceiver");
+            Log.e("TESTING","EndedCallkitIncomingBroadcastReceiver "+isFinishing);
             if (!isFinishing) {
-                Log.e("TESTING","EndedCallkitIncomingBroadcastReceiver isFinishing");
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    Log.e("TESTING","EndedCallkitIncomingBroadcastReceiver finishAndRemoveTask");
                     finishAndRemoveTask()
                 } else {
-                    Log.e("TESTING","EndedCallkitIncomingBroadcastReceiver finish");
                     finish()
                 }
             }
