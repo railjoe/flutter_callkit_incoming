@@ -53,7 +53,7 @@ class CallkitIncomingActivity : Activity() {
     companion object {
 
         const val ACTION_ENDED_CALL_INCOMING =
-                "com.hiennv.flutter_callkit_incoming.ACTION_ENDED_CALL_INCOMING"
+                "ACTION_ENDED_CALL_INCOMING"
 
         fun getIntent(context: Context, data: Bundle) = Intent(ACTION_CALL_INCOMING).apply {
             action = "${context.packageName}.${ACTION_CALL_INCOMING}"
@@ -113,9 +113,10 @@ class CallkitIncomingActivity : Activity() {
         setContentView(R.layout.activity_callkit_incoming)
         initView()
         incomingData(intent)
+        Log.e("TESTING","registerReceiver");
         registerReceiver(
                 endedCallkitIncomingBroadcastReceiver,
-                IntentFilter(ACTION_ENDED_CALL_INCOMING)
+                IntentFilter("${packageName}.${ACTION_ENDED_CALL_INCOMING}")
         )
     }
 
@@ -329,6 +330,7 @@ class CallkitIncomingActivity : Activity() {
     }
 
     override fun onDestroy() {
+        Log.e("TESTING","unregisterReceiver");
         unregisterReceiver(endedCallkitIncomingBroadcastReceiver)
         super.onDestroy()
     }
