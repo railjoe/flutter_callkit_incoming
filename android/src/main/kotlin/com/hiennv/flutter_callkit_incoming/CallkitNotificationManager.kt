@@ -143,7 +143,11 @@ class CallkitNotificationManager(private val context: Context) {
         } catch (_: Exception) {
         }
         notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_ID_INCOMING)
-        notificationBuilder.priority = NotificationCompat.PRIORITY_MAX
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            notificationBuilder.priority = NotificationManager.IMPORTANCE_HIGH
+        } else {
+            notificationBuilder.priority = NotificationCompat.PRIORITY_MAX
+        }
         val isCustomNotification =
             data.getBoolean(CallkitConstants.EXTRA_CALLKIT_IS_CUSTOM_NOTIFICATION, false)
         val isCustomSmallExNotification =
