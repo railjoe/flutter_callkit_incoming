@@ -579,7 +579,11 @@ class CallkitNotificationManager(private val context: Context) {
            val intent = Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT).apply {
                 data =  Uri.fromParts("package", activity?.packageName, null)
             }
-            activity?.startActivity(intent)
+            val packageManager = activity?.packageManager
+            if  (packageManager != null && intent.resolveActivity(packageManager) != null) {
+                activity.startActivity(intent)
+            }
+
         }
     }
 
