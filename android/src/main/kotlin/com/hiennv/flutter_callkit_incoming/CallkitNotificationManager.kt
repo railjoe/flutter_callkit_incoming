@@ -577,14 +577,17 @@ class CallkitNotificationManager(private val context: Context) {
 
     fun requestFullIntentPermission(activity: Activity?) {
         if (Build.VERSION.SDK_INT > 33) {
-           val intent = Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT).apply {
-                data =  Uri.fromParts("package", activity?.packageName, null)
-            }.apply {
-                flags = FLAG_ACTIVITY_NEW_TASK
-           }
-            val packageManager = activity?.packageManager
-            if  (packageManager != null && intent.resolveActivity(packageManager) != null) {
-                activity.startActivity(intent)
+            val nm = activity?.getSystemService(Activity.NOTIFICATION_SERVICE) as? NotificationManager
+            if(nm != null && nm.canUseFullScreenIntent()) {
+                val intent = Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT).apply {
+                    data = Uri.fromParts("package", activity?.packageName, null)
+                }.apply {
+                    flags = FLAG_ACTIVITY_NEW_TASK
+                }
+                val packageManager = activity?.packageManager
+                if (packageManager != null && intent.resolveActivity(packageManager) != null) {
+                    activity.startActivity(intent)
+                }
             }
 
         }
