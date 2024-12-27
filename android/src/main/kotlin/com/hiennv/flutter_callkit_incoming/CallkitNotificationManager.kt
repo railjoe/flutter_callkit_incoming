@@ -10,6 +10,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -578,7 +579,9 @@ class CallkitNotificationManager(private val context: Context) {
         if (Build.VERSION.SDK_INT > 33) {
            val intent = Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT).apply {
                 data =  Uri.fromParts("package", activity?.packageName, null)
-            }
+            }.apply {
+                flags = FLAG_ACTIVITY_NEW_TASK
+           }
             val packageManager = activity?.packageManager
             if  (packageManager != null && intent.resolveActivity(packageManager) != null) {
                 activity.startActivity(intent)
